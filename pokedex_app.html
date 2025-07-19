@@ -91,6 +91,7 @@
             transition: background-color 0.2s;
             text-transform: capitalize;
             border-radius: 8px;
+            font-size: 1rem;
         }
 
         .suggestion-item:hover {
@@ -347,6 +348,8 @@
         const loading = document.getElementById('loading');
         const error = document.getElementById('error');
 
+        suggestions.style.display = 'none';
+
         // Load Pokemon names for auto-suggest
         async function loadPokemonNames() {
             if (isLoadingNames) return;
@@ -379,6 +382,7 @@
 
         // Show suggestions based on input
         function showSuggestions(input) {
+            suggestions.style.display = 'block';
             const filtered = pokemonNames.filter(name => 
                 name.toLowerCase().includes(input.toLowerCase())
             ).slice(0, 5);
