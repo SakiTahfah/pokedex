@@ -67,6 +67,8 @@
         .search-input:focus {
             transform: translateY(-2px);
             box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+            outline: none;
+            border: solid rgba(255,255,255,0.4) 1px;
         }
 
         .suggestions {
@@ -101,15 +103,24 @@
         
 
         .pokemon-card {
-            background: white;
+            background: #D7DBDA;
             border-radius: 20px;
-            padding: 2rem;
+            padding: 0.5rem;
             box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-            max-width: 600px;
+            max-width: 360px;
             margin: 0 auto;
             transform: translateY(10px);
             opacity: 0;
             transition: all 0.5s ease;
+            width: 100%;
+        }
+
+        .card-content {
+            
+            background: #0D121F;
+            border-radius: 12px;
+            height: 100%;
+            
         }
 
         .pokemon-card.show {
@@ -118,20 +129,43 @@
         }
 
         .pokemon-header {
-            text-align: center;
-            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            gap: 12px;
+            padding: 16px 12px
+        }
+
+        .card-heading{
+            display: flex;
+            gap: 12px;
         }
 
         .pokemon-name {
-            font-size: 2.5rem;
-            color: #333;
-            margin-bottom: 0.5rem;
+            font-size: 1.25rem;
+            color: rgba(255,255,255,0.9);
             text-transform: capitalize;
         }
 
         .pokemon-id {
-            color: #666;
-            font-size: 1.1rem;
+            color: rgba(0,0,0,0.88);
+            font-size: 0.75rem;
+            font-weight: bold;
+            width: fit-content;
+            padding: 4px 8px;
+            border-top-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            border-top-right-radius: 12px;
+            border-bottom-left-radius: 12px;
+
+            background: linear-gradient(
+    to bottom,
+    #FFFFFF 0%,
+    #C7C7C5 27%,
+    #BEC0BF 34%,
+    #FAFCFE 50%,
+    #999999 100%
+            );  
         }
 
         .pokemon-sprite {
@@ -149,25 +183,30 @@
         }
 
         .pokemon-info {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0rem;
+            
         }
 
         .info-section {
-            background: #f8f9fa;
-            padding: 1rem;
-            border-radius: 10px;
+            background: black;
+            padding: 16px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+
         }
 
         .info-title {
             font-weight: bold;
-            color: #333;
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.6);
             margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            text-transform: uppercase;
         }
 
         .hp-value {
@@ -176,14 +215,20 @@
             font-weight: bold;
         }
 
+        .pokemon-types {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
         .type-badge {
             display: inline-block;
-            padding: 5px 12px;
-            border-radius: 15px;
+            padding: 6px 12px;
+            border-radius: 100px;
             color: white;
-            font-size: 0.9rem;
-            margin: 2px;
-            text-transform: capitalize;
+            font-size: 0.625rem;
+            
+            text-transform: uppercase;
             font-weight: bold;
         }
 
@@ -259,7 +304,8 @@
         
         
         <div class="search-container">
-            <input type="text" class="search-input" placeholder="Search for a Pokémon..." id="searchInput">
+            <!-- <img src="path/to/search-icon.png" alt="Search Icon" class="search-icon"> -->
+            <input type="text" class="search-input" placeholder="Search Pokémon" id="searchInput">
             <div class="suggestions" id="suggestions"></div>
         </div>
         
@@ -270,33 +316,32 @@
         <div id="error" class="error" style="display: none;"></div>
         
         <div id="pokemonCard" class="pokemon-card" style="display: none;">
+            <div class="card-content">
             <div class="pokemon-header">
+                <div class="card-heading">
+                    <p class="pokemon-id" id="pokemonId"></p>
                 <h2 class="pokemon-name" id="pokemonName"></h2>
-                <p class="pokemon-id" id="pokemonId"></p>
-                <div id="pokemonTypes"></div>
+                
+                </div>
+                <div id="pokemonTypes" class="pokemon-types"></div>
             </div>
             
             <img class="pokemon-sprite" id="pokemonSprite" alt="Pokemon Sprite">
             
             <div class="pokemon-info">
-                <div class="info-section">
-                    <div class="info-title">💚 HP</div>
-                    <div class="hp-value" id="pokemonHP"></div>
-                </div>
+                
+        
                 
                 <div class="info-section">
-                    
-                </div>
-                
-                <div class="info-section">
-                    <div class="info-title">🎯 Abilities</div>
+                    <div class="info-title">Abilities</div>
                     <div class="abilities-list" id="pokemonAbilities"></div>
                 </div>
                 
                 <div class="info-section">
-                    <div class="info-title">🛡️ Weaknesses</div>
+                    <div class="info-title">Weak against</div>
                     <div id="pokemonWeaknesses"></div>
                 </div>
+            </div>
             </div>
         </div>
     </div>
@@ -485,8 +530,7 @@
                 };
                 
                 // HP
-                const hpStat = pokemon.stats.find(stat => stat.stat.name === 'hp');
-                document.getElementById('pokemonHP').textContent = hpStat ? hpStat.base_stat : 'Unknown';
+                
                 
                 // Types
                 const typesContainer = document.getElementById('pokemonTypes');
