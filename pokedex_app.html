@@ -12,8 +12,13 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(
+    ellipse at center top,
+    #1C2929 0%,
+    #1C2929 20%,
+    #191A1A 100%
+);
             min-height: 100vh;
             padding: 20px;
         }
@@ -21,6 +26,9 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         h1 {
@@ -38,20 +46,22 @@
         }
 
         .search-container {
-            position: relative;
-            max-width: 500px;
+            
+            width: 100%;
             margin: 0 auto 2rem;
         }
 
         .search-input {
             width: 100%;
-            padding: 15px 20px;
-            font-size: 1.1rem;
-            border: none;
-            border-radius: 25px;
-            outline: none;
+            padding: 16px;
+            font-size: 1.25rem;
+            border: solid #3F4747 1px;
+            border-radius: 8px;
+            /* outline: none; */
+            background-color: #1F2121;
             box-shadow: 0 8px 25px rgba(0,0,0,0.2);
             transition: all 0.3s ease;
+            color: rgba(255, 255, 255, 0.8);
         }
 
         .search-input:focus {
@@ -248,7 +258,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>🔴 Pokédex</h1>
+        
         
         <div class="search-container">
             <input type="text" class="search-input" placeholder="Search for a Pokémon..." id="searchInput">
@@ -265,6 +275,7 @@
             <div class="pokemon-header">
                 <h2 class="pokemon-name" id="pokemonName"></h2>
                 <p class="pokemon-id" id="pokemonId"></p>
+                <div id="pokemonTypes"></div>
             </div>
             
             <img class="pokemon-sprite" id="pokemonSprite" alt="Pokemon Sprite">
@@ -276,8 +287,7 @@
                 </div>
                 
                 <div class="info-section">
-                    <div class="info-title">⚡ Types</div>
-                    <div id="pokemonTypes"></div>
+                    
                 </div>
                 
                 <div class="info-section">
@@ -520,6 +530,7 @@
                 }
                 
                 showPokemonCard();
+                console.log("Pokemon data displayed successfully:", pokemon.name);
             } catch (err) {
                 console.error('Error displaying Pokemon data:', err);
                 showError('Error displaying Pokemon data. The data might be incomplete.');
@@ -541,13 +552,22 @@
         }
 
         function showPokemonCard() {
+            // pokemonCard.style.display = 'block';
+            // setTimeout(() => pokemonCard.classList.add('show'), 50);
+            // console.log("Card visible");
+
             pokemonCard.style.display = 'block';
-            setTimeout(() => pokemonCard.classList.add('show'), 50);
+            // Use requestAnimationFrame to ensure the display change has taken effect
+            requestAnimationFrame(() => {
+                pokemonCard.classList.add('show');
+            });
         }
 
         function hidePokemonCard() {
             pokemonCard.classList.remove('show');
-            setTimeout(() => pokemonCard.style.display = 'none', 300);
+            // setTimeout(() => pokemonCard.style.display = 'none', 300);
+            // console.log("Card hidden");
+
         }
 
         // Event listeners
