@@ -70,37 +70,34 @@
         }
 
         .suggestions {
-            position: absolute;
+            /* position: absolute; */
             top: 100%;
             left: 0;
             right: 0;
-            background: white;
-            border-radius: 15px;
+            background: #1F2121;
+            color: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
             box-shadow: 0 8px 25px rgba(0,0,0,0.2);
             max-height: 200px;
             overflow-y: auto;
             z-index: 1000;
-            margin-top: 5px;
+            margin-top: 8px;
+            padding: 16px;
         }
 
         .suggestion-item {
-            padding: 12px 20px;
+            padding: 12px 8px;
             cursor: pointer;
             transition: background-color 0.2s;
             text-transform: capitalize;
+            border-radius: 8px;
         }
 
         .suggestion-item:hover {
-            background-color: #f0f0f0;
+            background-color: #2D2F2F;
         }
 
-        .suggestion-item:first-child {
-            border-radius: 15px 15px 0 0;
-        }
-
-        .suggestion-item:last-child {
-            border-radius: 0 0 15px 15px;
-        }
+        
 
         .pokemon-card {
             background: white;
@@ -397,6 +394,7 @@
                         searchInput.value = name;
                         suggestions.innerHTML = '';
                         searchPokemon(name);
+                        suggestions.style.display = 'none';
                     });
                     suggestions.appendChild(div);
                 });
