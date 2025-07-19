@@ -103,7 +103,15 @@
         
 
         .pokemon-card {
-            background: #D7DBDA;
+            /* background: #D7DBDA; */
+            background: linear-gradient(
+    to bottom,
+    #FFFFFF 0%,
+    #C7C7C5 27%,
+    #BEC0BF 34%,
+    #FAFCFE 50%,
+    #999999 100%
+            );  
             border-radius: 20px;
             padding: 0.5rem;
             box-shadow: 0 15px 35px rgba(0,0,0,0.2);
@@ -259,12 +267,14 @@
         }
 
         .ability-badge {
-            background: #3498db;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            text-transform: capitalize;
+            background: #000;
+            color: rgba(255,255,255,0.9);
+            padding: 6px 12px;
+            border-radius: 100px;
+            font-size: 0.625rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            border: dotted 1px rgba(255,255,255,0.6);
         }
 
         .pokemon-weaknesses {
@@ -632,6 +642,7 @@
             if (e.key === 'Enter') {
                 suggestions.innerHTML = '';
                 searchPokemon(e.target.value);
+                suggestions.style.display = 'none';
             }
         });
 
