@@ -177,12 +177,26 @@
             );  
         }
 
-        .pokemon-sprite {
-            width: 200px;
+        .pokemon-sprite-container {
+            width: 200px;     /* or any fixed size */
             height: 200px;
             margin: 0 auto 1.5rem;
+            
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pokemon-sprite {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+            aspect-ratio: 1 / 1;
             display: block;
-            animation: bounce 2s infinite;
+            filter: drop-shadow(0 0 0 white) drop-shadow(0 0 4px white);
+            transform: scale(1.05);
         }
 
         @keyframes bounce {
@@ -309,10 +323,10 @@
                 font-size: 2rem;
             }
             
-            .pokemon-sprite {
+            /* .pokemon-sprite {
                 width: 150px;
                 height: 150px;
-            }
+            } */
         }
     </style>
 </head>
@@ -342,9 +356,9 @@
                 </div>
                 <div id="pokemonTypes" class="pokemon-types"></div>
             </div>
-            
+            <div class="pokemon-sprite-container">
             <img class="pokemon-sprite" id="pokemonSprite" alt="Pokemon Sprite">
-            
+            </div>
             <div class="pokemon-info">
                 
         
@@ -536,10 +550,16 @@
                 document.getElementById('pokemonId').textContent = `#${pokemon.id.toString().padStart(3, '0')}`;
                 
                 // Set sprite with fallback
-                const sprite = pokemon.sprites.front_default || 
-                             pokemon.sprites.front_shiny || 
-                             pokemon.sprites.other?.['official-artwork']?.front_default ||
-                             'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';
+                //const sprite = pokemon.sprites.front_default || 
+                  //           pokemon.sprites.front_shiny || 
+                    //         pokemon.sprites.other?.['official-artwork']?.front_default ||
+                      //       'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';
+
+                const sprite =
+  pokemon.sprites.versions?.['generation-v']?.['black-white']?.animated?.front_default ||
+  pokemon.sprites.other?.['official-artwork']?.front_default ||
+  pokemon.sprites.front_default ||
+  'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';
                              
                 document.getElementById('pokemonSprite').src = sprite;
                 document.getElementById('pokemonSprite').onerror = function() {
